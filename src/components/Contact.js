@@ -8,8 +8,11 @@ const Contact = () => {
   const[email,setEmail] = useState("");
   const[message,setMessage] = useState("");
 
+  const[loader,setLoader] = useState(false);
+
   const handleSubmit = (e) => {
      e.preventDefault();
+     setLoader(true);
 
      //add
      db.collection('contacts').add({
@@ -19,9 +22,11 @@ const Contact = () => {
      })
      .then(() => {
        alert("Message has been submitted ");
+       setLoader(false);
      })
      .catch((error) => {
        alert(error.message);
+       setLoader(false);
      });
 
      setName("");
@@ -54,7 +59,7 @@ const Contact = () => {
        onChange={(e) => setMessage(e.target.value)}
        ></textarea>
 
-       <button type="Submit">Submit</button>
+       <button type="submit" style={{background : loader ? "#ccc":"rgb(2,2,110)"}}>Submit</button>
     </form>
   )
 }
